@@ -1,0 +1,52 @@
+syntax = 'proto3';
+
+package msg_service_protos;
+
+option go_package = "message_service/protos";
+
+service MessageService {
+    //rpc GetMessage(GetMessageRequest) returns (GetMessageResponse); // database 
+    rpc Connection(stream ConnectionRequest) returns (stream ConnectionResponse); // database
+    rpc SendMessage(SendMessageRequest) returns (SendMessageResponse); 
+    //rpc ReceiveMessage(stream ReceiveMessageRequest) returns (stream ReceiveMessageResponse);
+}
+
+message ConnectionRequest{
+    string connection_id = 1; // need auth info
+}
+
+message ConnectionResponse{
+    string message = 1;
+    string sender_id = 2;
+}
+
+
+message SendMessageRequest{
+    string target_id = 1;
+    string message = 2;
+    string sender_id = 3;
+}
+
+message SendMessageResponse{
+    bool sent = 1;
+    string sender_id = 3;
+    string target_id = 4;
+}
+/*
+message GetMessageRequest {
+}
+
+message GetMessageResponse {
+}
+
+message SaveMessageRequest {
+}
+
+message SaveMessageResponse {
+}
+
+message ReceiveMessageRequest {
+}
+
+message ReceiveMessageResponse {
+} */
